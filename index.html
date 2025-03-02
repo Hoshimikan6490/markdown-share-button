@@ -46,6 +46,7 @@
             border-color: #0056b3;
             outline: none;
             background-color: #fff;
+            border-width: 3px;
         }
 
         .sns-option {
@@ -106,7 +107,10 @@
         #twitter-hashtags,
         #line-text,
         #misskey-title,
-        #misskey-text {
+        #misskey-text,
+        #emailAddress,
+        #email-subject,
+        #email-body {
             width: 93.5%;
         }
 
@@ -245,8 +249,12 @@
         </div>
 
         <div id="email-details">
-            <label for="emailAddress">送信先メールアドレス:</label>
+            <label for="emailAddress">送信先メールアドレス(必須)</label>
             <input type="email" id="emailAddress" placeholder="example@example.com">
+            <label for="email-subject">メールの件名(必須)</label>
+            <input type="text" id="email-subject" placeholder="メールの件名">
+            <label for="email-body">メールの本文(必須)</label>
+            <input type="text" id="email-body" placeholder="メールの本文">
         </div>
 
         <button onclick="generateOutput()">生成</button>
@@ -255,7 +263,7 @@
     </div>
     <div class="credit">
         <div>
-            <p>version 0.0.10</p>
+            <p>version 1.0.1</p>
         </div>
         <div>
             <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
@@ -316,6 +324,8 @@
             let lineText = document.getElementById("line-text").value;
             let misskeyTitle = document.getElementById("misskey-title").value;
             let misskeyText = document.getElementById("misskey-text").value;
+            let emailSubject = document.getElementById("email-subject").value;
+            let emailBody = document.getElementById("email-body").value;
 
             // ハッシュタグの入力値を調整
             xHashtags = checkHashtags(xHashtags);
@@ -330,11 +340,11 @@
                         break;
                     case "twitter":
                         let twitterLogo = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHZpZXdCb3g9IjAgMCAyNDggMjA0Ij4KICA8cGF0aCBmaWxsPSIjMWQ5YmYwIiBkPSJNMjIxLjk1IDUxLjI5Yy4xNSAyLjE3LjE1IDQuMzQuMTUgNi41MyAwIDY2LjczLTUwLjggMTQzLjY5LTE0My42OSAxNDMuNjl2LS4wNGMtMjcuNDQuMDQtNTQuMzEtNy44Mi03Ny40MS0yMi42NCAzLjk5LjQ4IDggLjcyIDEyLjAyLjczIDIyLjc0LjAyIDQ0LjgzLTcuNjEgNjIuNzItMjEuNjYtMjEuNjEtLjQxLTQwLjU2LTE0LjUtNDcuMTgtMzUuMDcgNy41NyAxLjQ2IDE1LjM3IDEuMTYgMjIuOC0uODctMjMuNTYtNC43Ni00MC41MS0yNS40Ni00MC41MS00OS41di0uNjRjNy4wMiAzLjkxIDE0Ljg4IDYuMDggMjIuOTIgNi4zMkMxMS41OCA2My4zMSA0Ljc0IDMzLjc5IDE4LjE0IDEwLjcxYzI1LjY0IDMxLjU1IDYzLjQ3IDUwLjczIDEwNC4wOCA1Mi43Ni00LjA3LTE3LjU0IDEuNDktMzUuOTIgMTQuNjEtNDguMjUgMjAuMzQtMTkuMTIgNTIuMzMtMTguMTQgNzEuNDUgMi4xOSAxMS4zMS0yLjIzIDIyLjE1LTYuMzggMzIuMDctMTIuMjYtMy43NyAxMS42OS0xMS42NiAyMS42Mi0yMi4yIDI3LjkzIDEwLjAxLTEuMTggMTkuNzktMy44NiAyOS03Ljk1LTYuNzggMTAuMTYtMTUuMzIgMTkuMDEtMjUuMiAyNi4xNnoiLz4KPC9zdmc+"
-                        let twitterMarkdown = `[![twitter共有ボタン](https://img.shields.io/twitter/url?url=https://twitter.com/share&style=social&logo=${twitterLogo}&label=Twitterで共有する)](https://twitter.com/share?${xText ? `text=${xText}` : ""}&url=${url}${xHashtags.length ? `&hashtags=${xHashtags.join(",")}` : ""}${xAccount ? `&via=${xAccount}` : ""})`;
+                        let twitterMarkdown = `[![twitter共有ボタン](https://img.shields.io/twitter/url?url=https://twitter.com/share&style=social&logo=${twitterLogo}&label=Twitterで共有する)](https://twitter.com/share?${twitterText ? `text=${twitterText}` : ""}&url=${url}${twitterHashtags.length ? `&hashtags=${twitterHashtags.join(",")}` : ""}${twitterAccount ? `&via=${twitterAccount}` : ""})`;
                         selectedSNS.push(twitterMarkdown);
                         break;
                     case "facebook":
-                        let facebookMarkdown = `[![Facebook共有ボタン](https://img.shields.io/twitter/url?url=https://www.facebook.com/plugins/share_button.php?&width=102&height=20&style=social&logo=facebook&logoSize=auto&label=Facebookで共有する)](https://www.facebook.com/plugins/share_button.php?href=${url}&width=102&height=20)`;
+                        let facebookMarkdown = `[![Facebook共有ボタン](https://img.shields.io/twitter/url?url=https://www.facebook.com/plugins/share_button.php?&width=102&height=20&style=social&logo=facebook&logoSize=auto&label=Facebookで共有する)](https://www.facebook.com/sharer/sharer.php?u=${url})`;
                         selectedSNS.push(facebookMarkdown);
                         break;
                     case "line":
@@ -351,12 +361,20 @@
                         selectedSNS.push(pocketMarkdown);
                         break;
                     case "email":
-                        let email = document.getElementById("emailAddress").value;
-                        if (!email) {
-                            alert("メールを選択した場合、送信先アドレスを入力してください。");
+                        let emailAddress = document.getElementById("emailAddress").value;
+                        if (!emailAddress || !emailSubject || !emailBody) {
+                            alert("メールを選択した場合、送信先アドレスと件名と本文を全て入力してください。");
                             return;
                         }
-                        selectedSNS.push(`email(${email})`);
+
+                        if (!emailAddress.match(/[a-zA-Z0-9.+_-]+@.+\.[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]/)) {
+                            alert("メールアドレスの形式が正しくありません。\nメールアドレスが正しく入力されているか確認してください。");
+                            return;
+                        }
+
+                        let emailLogo = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyBmaWxsPSIjMDAwMDAwIiB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAxOTIwIDE5MjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogICAgPHBhdGggZD0iTTE5MjAgNDI4LjI2NnYxMTg5LjU0bC00NjQuMTYtNTgwLjE0Ni04OC4yMDMgNzAuNTg1IDQ2OC42NzkgNTg1LjkwNEg4My42ODRsNDY4LjY3OS01ODUuOTA0LTg4LjIwMi03MC41ODVMMCAxNjE3LjgwNVY0MjguMjY1bDk1OS45NDQgODMyLjQ0MUwxOTIwIDQyOC4yNjZaTTE5MTkuOTMyIDIyNnY1Mi42MjdsLTk1OS45NDMgODMyLjQ0TC4wNDUgMjc4LjYyOFYyMjZoMTkxOS44ODdaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4NCjwvc3ZnPg==";
+                        let emailMarkdown = `[![Email共有ボタン](https://img.shields.io/twitter/url?url=http://mail.google.com&style=social&logo=${emailLogo}&logoColor=black&logoSize=auto&label=Emailで共有する)](mailto:${emailAddress}?subject=${emailSubject}&body=${emailBody}%0D%0A${url})`;
+                        selectedSNS.push(emailMarkdown);
                         break;
                 }
             });
