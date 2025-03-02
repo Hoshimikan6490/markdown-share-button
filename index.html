@@ -249,11 +249,11 @@
         </div>
 
         <div id="email-details">
-            <label for="emailAddress">送信先メールアドレス(必須)</label>
+            <label for="emailAddress">送信先メールアドレス</label>
             <input type="email" id="emailAddress" placeholder="example@example.com">
-            <label for="email-subject">メールの件名(必須)</label>
+            <label for="email-subject">メールの件名</label>
             <input type="text" id="email-subject" placeholder="メールの件名">
-            <label for="email-body">メールの本文(必須)</label>
+            <label for="email-body">メールの本文</label>
             <input type="text" id="email-body" placeholder="メールの本文">
         </div>
 
@@ -263,7 +263,7 @@
     </div>
     <div class="credit">
         <div>
-            <p>version 1.0.1</p>
+            <p>version 1.0.2</p>
         </div>
         <div>
             <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
@@ -315,17 +315,17 @@
             }
 
             let selectedSNS = [];
-            let xText = document.getElementById("x-text").value;
-            let xHashtags = document.getElementById("x-hashtags").value;
-            let xAccount = document.getElementById("x-account").value;
-            let twitterText = document.getElementById("twitter-text").value;
-            let twitterHashtags = document.getElementById("twitter-hashtags").value;
-            let twitterAccount = document.getElementById("twitter-account").value;
-            let lineText = document.getElementById("line-text").value;
-            let misskeyTitle = document.getElementById("misskey-title").value;
-            let misskeyText = document.getElementById("misskey-text").value;
-            let emailSubject = document.getElementById("email-subject").value;
-            let emailBody = document.getElementById("email-body").value;
+            let xText = encodeURIComponent(document.getElementById("x-text").value);
+            let xHashtags = encodeURIComponent(document.getElementById("x-hashtags").value);
+            let xAccount = encodeURIComponent(document.getElementById("x-account").value);
+            let twitterText = encodeURIComponent(document.getElementById("twitter-text").value);
+            let twitterHashtags = encodeURIComponent(document.getElementById("twitter-hashtags").value);
+            let twitterAccount = encodeURIComponent(document.getElementById("twitter-account").value);
+            let lineText = encodeURIComponent(document.getElementById("line-text").value);
+            let misskeyTitle = encodeURIComponent(document.getElementById("misskey-title").value);
+            let misskeyText = encodeURIComponent(document.getElementById("misskey-text").value);
+            let emailSubject = encodeURIComponent(document.getElementById("email-subject").value);
+            let emailBody = encodeURIComponent(document.getElementById("email-body").value);
 
             // ハッシュタグの入力値を調整
             xHashtags = checkHashtags(xHashtags);
@@ -373,7 +373,7 @@
                         }
 
                         let emailLogo = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyBmaWxsPSIjMDAwMDAwIiB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAxOTIwIDE5MjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogICAgPHBhdGggZD0iTTE5MjAgNDI4LjI2NnYxMTg5LjU0bC00NjQuMTYtNTgwLjE0Ni04OC4yMDMgNzAuNTg1IDQ2OC42NzkgNTg1LjkwNEg4My42ODRsNDY4LjY3OS01ODUuOTA0LTg4LjIwMi03MC41ODVMMCAxNjE3LjgwNVY0MjguMjY1bDk1OS45NDQgODMyLjQ0MUwxOTIwIDQyOC4yNjZaTTE5MTkuOTMyIDIyNnY1Mi42MjdsLTk1OS45NDMgODMyLjQ0TC4wNDUgMjc4LjYyOFYyMjZoMTkxOS44ODdaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4NCjwvc3ZnPg==";
-                        let emailMarkdown = `[![Email共有ボタン](https://img.shields.io/twitter/url?url=http://mail.google.com&style=social&logo=${emailLogo}&logoColor=black&logoSize=auto&label=Emailで共有する)](mailto:${emailAddress}?subject=${emailSubject}&body=${emailBody}%0D%0A${url})`;
+                        let emailMarkdown = `[![Email共有ボタン](https://img.shields.io/twitter/url?url=http://mail.google.com&style=social&logo=${emailLogo}&logoColor=black&logoSize=auto&label=Emailで共有する)](mailto:${emailAddress}?body=${emailBody ? `${emailBody}%0D%0A` : ""}${url}&${emailSubject ? `subject=${emailSubject}` : ""})`;
                         selectedSNS.push(emailMarkdown);
                         break;
                 }
