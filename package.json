@@ -1,0 +1,23 @@
+{
+  "name": "markdown-share-button",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/Hoshimikan6490/markdown-share-button#readme",
+  "bugs": {
+    "url": "https://github.com/Hoshimikan6490/markdown-share-button/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hoshimikan6490/markdown-share-button.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
