@@ -92,8 +92,7 @@
         #x-details,
         #twitter-details,
         #line-details,
-        #misskey-details,
-        #pocket-details {
+        #misskey-details {
             display: none;
             background-color: #f0f0f0;
             padding: 20px;
@@ -106,8 +105,8 @@
         #twitter-text,
         #twitter-hashtags,
         #line-text,
-        #misskey-text,
-        #pocket-text {
+        #misskey-title,
+        #misskey-text {
             width: 93.5%;
         }
 
@@ -224,24 +223,20 @@
         <div class="sns-option">
             <label for="misskey"><input type="checkbox" id="misskey" value="misskey"
                     onchange="toggleDetails('misskey')"> <img src="images/misskey-logo.png"
-                    alt="Misskey">Misskey</label>
+                    alt="Misskey">Misskey(misskey.io)</label>
         </div>
 
         <!-- misskey details -->
         <div id="misskey-details">
+            <label for="misskey-title">共有時に表示されるタイトル</label>
+            <input type="text" id="misskey-title" placeholder="webサイトのタイトル">
             <label for="misskey-text">共有時に表示されるテキスト</label>
             <input type="text" id="misskey-text" placeholder="このサイト面白いよ！など">
         </div>
 
         <div class="sns-option">
-            <label for="pocket"><input type="checkbox" id="pocket" value="pocket" onchange="toggleDetails('pocket')">
+            <label for="pocket"><input type="checkbox" id="pocket" value="pocket">
                 <img src="images/pocket-logo.svg" alt="Pocket">Pocket</label>
-        </div>
-
-        <!-- pocket details -->
-        <div id="pocket-details">
-            <label for="pocket-text">共有時に表示されるテキスト</label>
-            <input type="text" id="pocket-text" placeholder="このサイト面白いよ！など">
         </div>
 
         <div class="sns-option">
@@ -319,8 +314,8 @@
             let twitterHashtags = document.getElementById("twitter-hashtags").value;
             let twitterAccount = document.getElementById("twitter-account").value;
             let lineText = document.getElementById("line-text").value;
+            let misskeyTitle = document.getElementById("misskey-title").value;
             let misskeyText = document.getElementById("misskey-text").value;
-            let pocketText = document.getElementById("pocket-text").value;
 
             // ハッシュタグの入力値を調整
             xHashtags = checkHashtags(xHashtags);
@@ -348,11 +343,11 @@
                         selectedSNS.push(lineMarkdown);
                         break;
                     case "misskey":
-                        let misskeyMarkdown = `[![misskey共有ボタン](https://img.shields.io/twitter/url?url=https://misskeyshare.link/share.html&style=social&logo=misskey&logoSize=auto&label=misskeyで共有する)](https://misskeyshare.link/share.html?text=${misskeyText}&url=${url})`;
+                        let misskeyMarkdown = `[![misskey共有ボタン](https://img.shields.io/twitter/url?url=https://misskey.io/share&style=social&logo=misskey&logoSize=auto&label=misskeyで共有する)](https://misskey.io/share?url=${url}${misskeyTitle ? `&title=${misskeyTitle}` : ""}${misskeyText ? `&text=${misskeyText}` : ""})`;
                         selectedSNS.push(misskeyMarkdown);
                         break;
                     case "pocket":
-                        let pocketMarkdown = `[![Pocket共有ボタン](https://img.shields.io/twitter/url?url=http://getpocket.com/edit&style=social&logo=pocket&logoSize=auto&label=Pocketで共有する)](http://getpocket.com/edit?url=${url}&title=${pocketText})`;
+                        let pocketMarkdown = `[![Pocket共有ボタン](https://img.shields.io/twitter/url?url=https://getpocket.com/edit&style=social&logo=pocket&logoSize=auto&label=Pocketで共有する)](https://getpocket.com/edit?url=${url})`;
                         selectedSNS.push(pocketMarkdown);
                         break;
                     case "email":
