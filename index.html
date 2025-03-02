@@ -11,8 +11,6 @@
             color: #333;
             margin: 0;
             padding: 20px;
-            display: flex;
-            justify-content: center;
         }
 
         .container {
@@ -21,6 +19,7 @@
             border-radius: 10px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             width: 400px;
+            margin: 0 auto;
         }
 
         h2,
@@ -65,12 +64,6 @@
             background: #f0f0f0;
         }
 
-        /*チェックボックスがONの時に角の丸みを調整*/
-        input[type="checkbox"]:checked+.sns-option {
-            border-bottom-left-radius: 0px;
-            border-bottom-right-radius: 0px;
-        }
-
         .sns-option img {
             width: 32px;
             height: 32px;
@@ -95,7 +88,7 @@
             transform: scale(1.2);
         }
 
-        #email-box,
+        #email-details,
         #x-details,
         #twitter-details,
         #line-details {
@@ -138,6 +131,7 @@
             cursor: pointer;
             font-size: 16px;
             transition: background 0.3s;
+            margin-top: 10px;
         }
 
         button:hover {
@@ -152,6 +146,12 @@
             text-align: center;
             font-weight: bold;
         }
+
+        .credit {
+            display: block;
+            width: 400px;
+            margin: 0 auto;
+        }
     </style>
 </head>
 
@@ -165,8 +165,8 @@
         <h3>共有するSNSを選択:</h3>
         <div class="sns-option">
             <label for="x">
-                <input type="checkbox" id="x" value="x" onchange="toggleXDetails()">
-                <img src="image/x-logo.svg" alt="X" id="x-logo">𝕏
+                <input type="checkbox" id="x" value="x" onchange="toggleDetails('x')">
+                <img src="images/x-logo.svg" alt="X" id="x-logo">𝕏
             </label>
         </div>
 
@@ -184,8 +184,9 @@
         </div>
 
         <div class="sns-option">
-            <label for="twitter"><input type="checkbox" id="twitter" value="twitter" onchange="toggleTwitterDetails()">
-                <img src="image/twitter-logo.svg" alt="Twitter">Twitter</label>
+            <label for="twitter"><input type="checkbox" id="twitter" value="twitter"
+                    onchange="toggleDetails('twitter')">
+                <img src="images/twitter-logo.svg" alt="Twitter">Twitter</label>
         </div>
 
         <!-- Twitter details -->
@@ -203,11 +204,11 @@
 
         <div class="sns-option">
             <label for="facebook"><input type="checkbox" id="facebook" value="facebook"> <img
-                    src="image/facebook-logo.svg" alt="Facebook">Facebook</label>
+                    src="images/facebook-logo.svg" alt="Facebook">Facebook</label>
         </div>
         <div class="sns-option">
-            <label for="line"><input type="checkbox" id="line" value="line" onchange="toggleLINEDetails()"> <img
-                    src="image/line-logo.svg" alt="LINE">LINE</label>
+            <label for="line"><input type="checkbox" id="line" value="line" onchange="toggleDetails('line')"> <img
+                    src="images/line-logo.svg" alt="LINE">LINE</label>
         </div>
 
         <!-- line details -->
@@ -217,19 +218,19 @@
         </div>
 
         <div class="sns-option">
-            <label for="misskey"><input type="checkbox" id="misskey" value="misskey"> <img src="image/misskey-logo.png"
+            <label for="misskey"><input type="checkbox" id="misskey" value="misskey"> <img src="images/misskey-logo.png"
                     alt="Misskey">Misskey</label>
         </div>
         <div class="sns-option">
-            <label for="pocket"><input type="checkbox" id="pocket" value="pocket"> <img src="image/pocket-logo.svg"
+            <label for="pocket"><input type="checkbox" id="pocket" value="pocket"> <img src="images/pocket-logo.svg"
                     alt="Pocket">Pocket</label>
         </div>
         <div class="sns-option">
-            <label for="mail"><input type="checkbox" id="mail" value="mail" onchange="toggleEmailBox()"> <img
-                    src="image/email-logo.svg" alt="Mail">Mail</label>
+            <label for="email"><input type="checkbox" id="email" value="email" onchange="toggleDetails('email')"> <img
+                    src="images/email-logo.svg" alt="email">email</label>
         </div>
 
-        <div id="email-box">
+        <div id="email-details">
             <label for="email">送信先メールアドレス:</label>
             <input type="email" id="email" placeholder="example@example.com">
         </div>
@@ -238,26 +239,29 @@
         <h3>生成された文字列:</h3>
         <p id="output"></p>
     </div>
+    <div class="credit">
+        <div>
+            <p>version 0.0.8</p>
+        </div>
+        <div>
+            <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
+        </div>
+    </div>
 
     <script>
-        function toggleEmailBox() {
-            document.getElementById('email-box').style.display =
-                document.getElementById('mail').checked ? 'block' : 'none';
-        }
+        function toggleDetails(type) {
+            let checkbox = document.getElementById(type);
+            document.getElementById(`${type}-details`).style.display =
+                checkbox.checked ? 'block' : 'none';
 
-        function toggleXDetails() {
-            document.getElementById('x-details').style.display =
-                document.getElementById('x').checked ? 'block' : 'none';
-        }
-
-        function toggleTwitterDetails() {
-            document.getElementById('twitter-details').style.display =
-                document.getElementById('twitter').checked ? 'block' : 'none';
-        }
-
-        function toggleLINEDetails() {
-            document.getElementById('line-details').style.display =
-                document.getElementById('line').checked ? 'block' : 'none';
+            // 角の丸みを調整
+            let div = document.querySelector(`label[for=${type}]`).closest("div");
+            if (checkbox.checked) {
+                div.style.borderBottomLeftRadius = "0";
+                div.style.borderBottomRightRadius = "0";
+            } else {
+                div.style = "";
+            }
         }
 
         // ハッシュタグの調整
@@ -327,13 +331,13 @@
                     case "pocket":
                         selectedSNS.push("Pocket");
                         break;
-                    case "mail":
+                    case "email":
                         let email = document.getElementById("email").value;
                         if (!email) {
                             alert("メールを選択した場合、送信先アドレスを入力してください。");
                             return;
                         }
-                        selectedSNS.push(`Mail(${email})`);
+                        selectedSNS.push(`email(${email})`);
                         break;
                 }
             });
