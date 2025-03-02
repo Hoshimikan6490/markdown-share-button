@@ -1,11 +1,13 @@
 const express = require("express");
+const path = require("path");
 const app = express();
 
 // 画像ファイルを読み込むための設定
-app.use("/images", express.static(`${__dirname}/images`));
+app.use("/images", express.static(path.join(__dirname, "../images")));
 
 app.get("/", (req, res) => {
-  res.sendFile(`${__dirname}/index.html`);
+  console.log(__dirname);
+  res.sendFile(path.join(__dirname, "../index.html"));
 });
 
 app.listen(3000, () => {
