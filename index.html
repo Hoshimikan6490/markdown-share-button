@@ -231,8 +231,8 @@
         </div>
 
         <div id="email-details">
-            <label for="email">送信先メールアドレス:</label>
-            <input type="email" id="email" placeholder="example@example.com">
+            <label for="emailAddress">送信先メールアドレス:</label>
+            <input type="email" id="emailAddress" placeholder="example@example.com">
         </div>
 
         <button onclick="generateOutput()">生成</button>
@@ -241,7 +241,7 @@
     </div>
     <div class="credit">
         <div>
-            <p>version 0.0.8</p>
+            <p>version 0.0.9</p>
         </div>
         <div>
             <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
@@ -332,7 +332,7 @@
                         selectedSNS.push("Pocket");
                         break;
                     case "email":
-                        let email = document.getElementById("email").value;
+                        let email = document.getElementById("emailAddress").value;
                         if (!email) {
                             alert("メールを選択した場合、送信先アドレスを入力してください。");
                             return;
