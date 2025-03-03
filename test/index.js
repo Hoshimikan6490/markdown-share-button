@@ -6,7 +6,6 @@ const app = express();
 app.use("/images", express.static(path.join(__dirname, "../images")));
 
 app.get("/", (req, res) => {
-  console.log(__dirname);
   res.sendFile(path.join(__dirname, "../index.html"));
 });
 
