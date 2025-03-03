@@ -183,12 +183,11 @@
         <textarea name="url" placeholder="共有したいURLを入力" wrap="soft" id="url"></textarea>
 
         <h3>共有するSNSを選択:</h3>
-        <div class="sns-option">
-            <label for="x">
-                <input type="checkbox" id="x" value="x" onchange="toggleDetails('x')">
-                <img src="images/x-logo.svg" alt="X" id="x-logo">𝕏
-            </label>
-        </div>
+        <label for="x" class="sns-option">
+            <input type="checkbox" id="x" value="x" onchange="toggleDetails('x')">
+            <img src="images/x-logo.svg" alt="X" id="x-logo">
+            𝕏
+        </label>
 
         <!-- X details -->
         <div id="x-details">
@@ -203,11 +202,11 @@
             </div>
         </div>
 
-        <div class="sns-option">
-            <label for="twitter"><input type="checkbox" id="twitter" value="twitter"
-                    onchange="toggleDetails('twitter')">
-                <img src="images/twitter-logo.svg" alt="Twitter">Twitter</label>
-        </div>
+        <label for="twitter" class="sns-option">
+            <input type="checkbox" id="twitter" value="twitter" onchange="toggleDetails('twitter')">
+            <img src="images/twitter-logo.svg" alt="Twitter">
+            Twitter
+        </label>
 
         <!-- Twitter details -->
         <div id="twitter-details">
@@ -222,14 +221,16 @@
             </div>
         </div>
 
-        <div class="sns-option">
-            <label for="facebook"><input type="checkbox" id="facebook" value="facebook"> <img
-                    src="images/facebook-logo.svg" alt="Facebook">Facebook</label>
-        </div>
-        <div class="sns-option">
-            <label for="line"><input type="checkbox" id="line" value="line" onchange="toggleDetails('line')"> <img
-                    src="images/line-logo.svg" alt="LINE">LINE</label>
-        </div>
+        <label for="facebook" class="sns-option">
+            <input type="checkbox" id="facebook" value="facebook">
+            <img src="images/facebook-logo.svg" alt="Facebook">
+            Facebook
+        </label>
+        <label for="line" class="sns-option">
+            <input type="checkbox" id="line" value="line" onchange="toggleDetails('line')">
+            <img src="images/line-logo.svg" alt="LINE">
+            LINE
+        </label>
 
         <!-- line details -->
         <div id="line-details">
@@ -237,11 +238,11 @@
             <input type="text" id="line-text" placeholder="このサイト面白いよ！など">
         </div>
 
-        <div class="sns-option">
-            <label for="misskey"><input type="checkbox" id="misskey" value="misskey"
-                    onchange="toggleDetails('misskey')"> <img src="images/misskey-logo.png"
-                    alt="Misskey">Misskey(misskey.io)</label>
-        </div>
+        <label for="misskey" class="sns-option">
+            <input type="checkbox" id="misskey" value="misskey" onchange="toggleDetails('misskey')">
+            <img src="images/misskey-logo.png" alt="Misskey">
+            Misskey(misskey.io)
+        </label>
 
         <!-- misskey details -->
         <div id="misskey-details">
@@ -251,15 +252,17 @@
             <input type="text" id="misskey-text" placeholder="このサイト面白いよ！など">
         </div>
 
-        <div class="sns-option">
-            <label for="pocket"><input type="checkbox" id="pocket" value="pocket">
-                <img src="images/pocket-logo.svg" alt="Pocket">Pocket</label>
-        </div>
+        <label for="pocket" class="sns-option">
+            <input type="checkbox" id="pocket" value="pocket">
+            <img src="images/pocket-logo.svg" alt="Pocket">
+            Pocket
+        </label>
 
-        <div class="sns-option">
-            <label for="email"><input type="checkbox" id="email" value="email" onchange="toggleDetails('email')"> <img
-                    src="images/email-logo.svg" alt="email">email</label>
-        </div>
+        <label for="email" class="sns-option">
+            <input type="checkbox" id="email" value="email" onchange="toggleDetails('email')">
+            <img src="images/email-logo.svg" alt="email">
+            email
+        </label>
 
         <div id="email-details">
             <label for="emailAddress">送信先メールアドレス</label>
@@ -278,7 +281,7 @@
     </div>
     <div class="credit">
         <div>
-            <p>version 1.0.5</p>
+            <p>version 1.0.6</p>
         </div>
         <div>
             <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
@@ -292,7 +295,7 @@
                 checkbox.checked ? 'block' : 'none';
 
             // 角の丸みを調整
-            let div = document.querySelector(`label[for=${type}]`).closest("div");
+            let div = document.querySelector(`label[for=${type}]`);
             if (checkbox.checked) {
                 div.style.borderBottomLeftRadius = "0";
                 div.style.borderBottomRightRadius = "0";
