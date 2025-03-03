@@ -27,6 +27,10 @@
             text-align: center;
         }
 
+        h3 {
+            margin-top: 40px;
+        }
+
         textarea,
         input[type="email"],
         input[type="text"] {
@@ -47,6 +51,10 @@
             outline: none;
             background-color: #fff;
             border-width: 3px;
+        }
+
+        textarea#url {
+            margin-bottom: 0px;
         }
 
         .sns-option {
@@ -110,7 +118,8 @@
         #misskey-text,
         #emailAddress,
         #email-subject,
-        #email-body {
+        #email-body,
+        #output {
             width: 93.5%;
         }
 
@@ -147,10 +156,14 @@
 
         #output {
             margin-top: 15px;
+            margin-bottom: 0px;
             background-color: #e9ecef;
             padding: 10px;
             border-radius: 5px;
             font-weight: bold;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
+            color: #757575;
         }
 
         .credit {
@@ -164,7 +177,6 @@
 <body>
     <div class="container">
         <h2>SNS共有リンク作成</h2>
-        <br>
         <h3><label for="url">URLを入力:</label></h3>
         <textarea name="url" placeholder="共有したいURLを入力" wrap="soft" id="url"></textarea>
 
@@ -257,10 +269,11 @@
         </div>
 
         <button onclick="generateOutput()">生成</button>
-        <!--TODO: 文字列生成後の表示を改善し、コピーボタンを作成-->
         <!--TODO: ロゴの大きさを統一-->
+
         <h3>生成された文字列:</h3>
-        <p id="output"></p>
+        <p id="output">URLを入力し、SNSを選択したら、「生成」ボタンを押してください。 </p>
+        <button onclick="copyOutput()">コピー</button>
     </div>
     <div class="credit">
         <div>
@@ -383,6 +396,24 @@
             document.getElementById("output").innerHTML = selectedSNS.length > 0
                 ? selectedSNS.map(item => escapeHTML(item)).join("<br>")
                 : "SNSを選択してください。";
+            document.getElementById("output").style.color = "black";
+        }
+
+        function copyOutput() {
+            let text = document.getElementById('output').innerText;
+
+            if (text == "URLを入力し、SNSを選択したら、「生成」ボタンを押してください。" || text == "SNSを選択してください。") {
+                alert('生成された文字列がありません。\n文字列を生成すると、結果をコピーできるようになります。');
+                return;
+            }
+
+            navigator.clipboard.writeText()
+                .then(() => {
+                    alert('コピーしました。');
+                })
+                .catch(err => {
+                    alert('コピーに失敗しました。');
+                });
         }
     </script>
 </body>
