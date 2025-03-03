@@ -3,7 +3,7 @@
 マークダウンに共有ボタンを設置するための文字列を生成します。
 
 ## 使い方
-1. https://hoshimikan6490.com/markdown-share-button/にアクセスする。
+1. https://hoshimikan6490.com/markdown-share-button/ にアクセスする。
 2. 共有させたいURLを入力する。
 3. 共有させたいSNSを選択し、項目によっては適切に詳細を記述する。
 4. 「生成」ボタンを押すと、下に文字列が生成されるので、それをマークダウンにコピペする。
