@@ -301,6 +301,15 @@
     </div>
 
     <script>
+        (window.onload = function () {
+            let uri = new URL(window.location.href);
+            if (uri.hostname === "https://markdown-share-button.pages.dev") {
+                document.querySelectorAll("img").forEach(img => {
+                    img.src = img.src.replace("markdown-share-button/", "");
+                });
+            }
+        })();
+
         function toggleDetails(type) {
             let checkbox = document.getElementById(type);
             document.getElementById(`${type}-details`).style.display =
