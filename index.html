@@ -303,7 +303,9 @@
     <script>
         (window.onload = function () {
             let uri = new URL(window.location.href);
-            if (uri.hostname === "markdown-share-button.pages.dev") {
+            if (uri.hostname === "markdown-share-button.pages.dev" ||
+                uri.hostname === "hoshimikan6490.github.io"
+            ) {
                 document.querySelectorAll("img").forEach(img => {
                     img.src = img.src.replace("markdown-share-button/", "");
                 });
