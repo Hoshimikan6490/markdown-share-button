@@ -12,7 +12,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://hoshimikan6490.com/markdown-share-button/">
     <meta property="og:image"
-        content="https://hoshimikan6490.com/markdown-share-button/markdown-share-button/images/thumbnail.png">
+        content="https://hoshimikan6490.com/markdown-share-button/markdown-share-button/images/thumbnail.svg">
     <meta property="og:description" content="markdown用SNS共有ボタン作成ツールです。URLを入力し、共有したいSNSを選択すると、そのSNS用の共有ボタンの文字列が生成されます。">
     <meta property="og:site_name" content="SNS共有ボタン作成ツール">
     <meta property="og:locale" content="ja_JP">
@@ -49,7 +49,7 @@
             width: 95%;
             padding: 10px;
             margin: 10px 0;
-            border: 2px solid #007bff;
+            border: 2px solid #69a225;
             border-radius: 5px;
             background-color: #f9f9f9;
             resize: vertical;
@@ -59,10 +59,9 @@
         textarea:focus,
         input[type="email"]:focus,
         input[type="text"]:focus {
-            border-color: #0056b3;
+            border-color: #296200;
             outline: none;
             background-color: #fff;
-            border-width: 3px;
         }
 
         textarea#url {
@@ -155,7 +154,7 @@
             width: 100%;
             padding: 10px;
             border: none;
-            background: #007bff;
+            background: #498205;
             color: white;
             border-radius: 5px;
             cursor: pointer;
@@ -165,7 +164,7 @@
         }
 
         button:hover {
-            background: #0056b3;
+            background: #296200;
         }
 
         #output {
@@ -177,7 +176,7 @@
             font-weight: bold;
             word-wrap: break-word;
             overflow-wrap: break-word;
-            color: #757575;
+            color: #606060;
         }
 
         .credit {
@@ -252,7 +251,7 @@
 
         <label for="misskey" class="sns-option">
             <input type="checkbox" id="misskey" value="misskey" onchange="toggleDetails('misskey')">
-            <img src="markdown-share-button/images/misskey-logo.png" alt="Misskey">
+            <img src="markdown-share-button/images/misskey-logo.svg" alt="Misskey">
             Misskey(misskey.io)
         </label>
 
@@ -271,7 +270,7 @@
         </label>
 
         <label for="email" class="sns-option">
-            <input type="checkbox" id="email" value="email" onchange="toggleDetails('email')">
+            <input type="checkbox" id="email" value="email" onchange="toggleDetails('email')" autocomplete="email">
             <img src="markdown-share-button/images/email-logo.svg" alt="email">
             email
         </label>
@@ -303,7 +302,7 @@
     <script>
         (window.onload = function () {
             let uri = new URL(window.location.href);
-            if (uri.hostname === "markdown-share-button.pages.dev") {
+            if (uri.hostname === "markdown-share-button.pages.dev" || uri.hostname == "localhost") {
                 document.querySelectorAll("img").forEach(img => {
                     img.src = img.src.replace("markdown-share-button/", "");
                 });
