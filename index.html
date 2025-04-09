@@ -297,7 +297,7 @@
     </div>
     <div class="credit">
         <div>
-            <p>version 1.0.10</p>
+            <p>version 1.0.11</p>
         </div>
         <div>
             <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
@@ -312,7 +312,7 @@
                     img.src = img.src.replace("markdown-share-button/", "");
                 });
             }
-            if (uri.hostname === "hoshimikan6490.com" && uri.pathname === "/markdown-share-button/markdown-share-button/") {
+            if (uri.hostname === "hoshimikan6490.com" && uri.pathname.includes("/markdown-share-button")) {
                 document.querySelectorAll("img").forEach(img => {
                     img.src = img.src.replace("/markdown-share-button/markdown-share-button/", "/markdown-share-button/");
                 });
