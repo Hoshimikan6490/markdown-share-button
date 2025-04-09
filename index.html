@@ -297,7 +297,7 @@
     </div>
     <div class="credit">
         <div>
-            <p>version 1.0.8</p>
+            <p>version 1.0.9</p>
         </div>
         <div>
             <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
@@ -307,7 +307,7 @@
     <script>
         (window.onload = function () {
             let uri = new URL(window.location.href);
-            if (uri.hostname === "markdown-share-button.pages.dev" || uri.hostname == "localhost") {
+            if (uri.hostname.includes("markdown-share-button.pages.dev") || uri.hostname == "localhost") {
                 document.querySelectorAll("img").forEach(img => {
                     img.src = img.src.replace("markdown-share-button/", "");
                 });
