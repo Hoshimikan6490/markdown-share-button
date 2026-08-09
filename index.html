@@ -1,455 +1,592 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta
+			name="description"
+			content="markdown用SNS共有ボタン作成ツールです。URLを入力し、共有したいSNSを選択すると、そのSNS用の共有ボタンの文字列が生成されます。"
+		/>
+		<meta name="keywords" content="SNS,共有,ボタン,作成,ツール,markdown" />
+		<meta name="author" content="Hoshimikan6490" />
+		<meta property="og:title" content="SNS共有ボタン作成ツール" />
+		<meta property="og:type" content="website" />
+		<meta
+			property="og:url"
+			content="https://hoshimikan6490.com/markdown-share-button/"
+		/>
+		<meta
+			property="og:image"
+			content="https://hoshimikan6490.com/markdown-share-button/images/thumbnail.png"
+		/>
+		<meta
+			property="og:description"
+			content="markdown用SNS共有ボタン作成ツールです。URLを入力し、共有したいSNSを選択すると、そのSNS用の共有ボタンの文字列が生成されます。"
+		/>
+		<meta property="og:site_name" content="SNS共有ボタン作成ツール" />
+		<meta property="og:locale" content="ja_JP" />
+		<meta
+			property="twitter:image"
+			content="https://hoshimikan6490.com/markdown-share-button/images/thumbnail.png"
+		/>
+		<meta property="twitter:site" content="@hoshimikan6490" />
+		<meta property="twitter:card" content="summary_large_image" />
+		<meta property="twitter:title" content="SNS共有ボタン作成ツール" />
+		<meta
+			property="twitter:description"
+			content="markdown用SNS共有ボタン作成ツールです。URLを入力し、共有したいSNSを選択すると、そのSNS用の共有ボタンの文字列が生成されます。"
+		/>
+		<title>SNS共有ボタン作成ツール</title>
+		<style>
+			body {
+				background-color: #f4f4f4;
+				color: #333;
+				margin: 0;
+				padding: 20px;
+			}
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="markdown用SNS共有ボタン作成ツールです。URLを入力し、共有したいSNSを選択すると、そのSNS用の共有ボタンの文字列が生成されます。">
-    <meta name="keywords" content="SNS,共有,ボタン,作成,ツール,markdown">
-    <meta name="author" content="Hoshimikan6490">
-    <meta property="og:title" content="SNS共有ボタン作成ツール">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://hoshimikan6490.com/markdown-share-button/">
-    <meta property="og:image" content="https://hoshimikan6490.com/markdown-share-button/images/thumbnail.png">
-    <meta property="og:description" content="markdown用SNS共有ボタン作成ツールです。URLを入力し、共有したいSNSを選択すると、そのSNS用の共有ボタンの文字列が生成されます。">
-    <meta property="og:site_name" content="SNS共有ボタン作成ツール">
-    <meta property="og:locale" content="ja_JP">
-    <meta property="twitter:image" content="https://hoshimikan6490.com/markdown-share-button/images/thumbnail.png">
-    <meta property="twitter:site" content="@hoshimikan6490">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:title" content="SNS共有ボタン作成ツール">
-    <meta property="twitter:description"
-        content="markdown用SNS共有ボタン作成ツールです。URLを入力し、共有したいSNSを選択すると、そのSNS用の共有ボタンの文字列が生成されます。">
-    <title>SNS共有ボタン作成ツール</title>
-    <style>
-        body {
-            background-color: #f4f4f4;
-            color: #333;
-            margin: 0;
-            padding: 20px;
-        }
+			.container {
+				background: white;
+				padding: 20px;
+				border-radius: 10px;
+				box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+				width: 400px;
+				margin: 0 auto;
+			}
 
-        .container {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 400px;
-            margin: 0 auto;
-        }
+			h2,
+			h3 {
+				text-align: center;
+			}
 
-        h2,
-        h3 {
-            text-align: center;
-        }
+			h3 {
+				margin-top: 40px;
+			}
 
-        h3 {
-            margin-top: 40px;
-        }
+			textarea,
+			input[type='email'],
+			input[type='text'] {
+				width: 95%;
+				padding: 10px;
+				margin: 10px 0;
+				border: 2px solid #69a225;
+				border-radius: 5px;
+				background-color: #f9f9f9;
+				resize: vertical;
+				font-size: 14px;
+			}
 
-        textarea,
-        input[type="email"],
-        input[type="text"] {
-            width: 95%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 2px solid #69a225;
-            border-radius: 5px;
-            background-color: #f9f9f9;
-            resize: vertical;
-            font-size: 14px;
-        }
+			textarea:focus,
+			input[type='email']:focus,
+			input[type='text']:focus {
+				border-color: #296200;
+				outline: none;
+				background-color: #fff;
+			}
 
-        textarea:focus,
-        input[type="email"]:focus,
-        input[type="text"]:focus {
-            border-color: #296200;
-            outline: none;
-            background-color: #fff;
-        }
+			textarea#url {
+				margin-bottom: 0px;
+			}
 
-        textarea#url {
-            margin-bottom: 0px;
-        }
+			.sns-option {
+				display: flex;
+				align-items: center;
+				background: #fff;
+				padding: 10px;
+				border-radius: 5px;
+				margin-top: 10px;
+				cursor: pointer;
+				transition: all 0.3s;
+				border: 1px solid #ddd;
+			}
 
-        .sns-option {
-            display: flex;
-            align-items: center;
-            background: #fff;
-            padding: 10px;
-            border-radius: 5px;
-            margin-top: 10px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid #ddd;
-        }
+			.sns-option:hover {
+				background: #f0f0f0;
+			}
 
-        .sns-option:hover {
-            background: #f0f0f0;
-        }
+			.sns-option img {
+				width: 40px;
+				height: 40px;
+				margin-right: 10px;
+			}
 
-        .sns-option img {
-            width: 40px;
-            height: 40px;
-            margin-right: 10px;
-        }
+			#x-logo {
+				background-color: black;
+				padding: 5px;
+				border-radius: 5px;
+				width: 30px;
+				height: 30px;
+			}
 
-        #x-logo {
-            background-color: black;
-            padding: 5px;
-            border-radius: 5px;
-            width: 30px;
-            height: 30px;
-        }
+			.sns-option label {
+				display: flex;
+				align-items: center;
+				cursor: pointer;
+				width: 100%;
+			}
 
-        .sns-option label {
-            display: flex;
-            align-items: center;
-            cursor: pointer;
-            width: 100%;
-        }
+			.sns-option input {
+				margin-right: 10px;
+				transform: scale(1.2);
+			}
 
-        .sns-option input {
-            margin-right: 10px;
-            transform: scale(1.2);
-        }
+			#email-details,
+			#x-details,
+			#twitter-details,
+			#line-details,
+			#misskey-details {
+				display: none;
+				background-color: #f0f0f0;
+				padding: 20px;
+				border-bottom-left-radius: 5px;
+				border-bottom-right-radius: 5px;
+			}
 
-        #email-details,
-        #x-details,
-        #twitter-details,
-        #line-details,
-        #misskey-details {
-            display: none;
-            background-color: #f0f0f0;
-            padding: 20px;
-            border-bottom-left-radius: 5px;
-            border-bottom-right-radius: 5px;
-        }
+			#x-text,
+			#x-hashtags,
+			#twitter-text,
+			#twitter-hashtags,
+			#line-text,
+			#misskey-title,
+			#misskey-text,
+			#emailAddress,
+			#email-subject,
+			#email-body,
+			#output {
+				width: 93.5%;
+			}
 
-        #x-text,
-        #x-hashtags,
-        #twitter-text,
-        #twitter-hashtags,
-        #line-text,
-        #misskey-title,
-        #misskey-text,
-        #emailAddress,
-        #email-subject,
-        #email-body,
-        #output {
-            width: 93.5%;
-        }
+			.account-input {
+				display: flex;
+				align-items: center;
+			}
 
-        .account-input {
-            display: flex;
-            align-items: center;
-        }
+			.account-input input {
+				width: calc(100% - 20px);
+			}
 
-        .account-input input {
-            width: calc(100% - 20px);
-        }
+			.account-input span {
+				width: 20px;
+				text-align: center;
+			}
 
-        .account-input span {
-            width: 20px;
-            text-align: center;
-        }
+			button {
+				width: 100%;
+				padding: 10px;
+				border: none;
+				background: #498205;
+				color: white;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 16px;
+				transition: background 0.3s;
+				margin-top: 10px;
+			}
 
-        button {
-            width: 100%;
-            padding: 10px;
-            border: none;
-            background: #498205;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background 0.3s;
-            margin-top: 10px;
-        }
+			button:hover {
+				background: #296200;
+			}
 
-        button:hover {
-            background: #296200;
-        }
+			#output {
+				margin-top: 15px;
+				margin-bottom: 0px;
+				background-color: #e9ecef;
+				padding: 10px;
+				border-radius: 5px;
+				font-weight: bold;
+				word-wrap: break-word;
+				overflow-wrap: break-word;
+				color: #606060;
+			}
 
-        #output {
-            margin-top: 15px;
-            margin-bottom: 0px;
-            background-color: #e9ecef;
-            padding: 10px;
-            border-radius: 5px;
-            font-weight: bold;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-            color: #606060;
-        }
+			.credit {
+				display: block;
+				width: 400px;
+				margin: 0 auto;
+			}
+		</style>
+	</head>
 
-        .credit {
-            display: block;
-            width: 400px;
-            margin: 0 auto;
-        }
-    </style>
-</head>
+	<body>
+		<div class="container">
+			<h2>SNS共有ボタン作成ツール</h2>
+			<h3><label for="url">URLを入力:</label></h3>
+			<textarea
+				name="url"
+				placeholder="共有したいURLを入力"
+				wrap="soft"
+				id="url"
+			></textarea>
 
-<body>
-    <div class="container">
-        <h2>SNS共有ボタン作成ツール</h2>
-        <h3><label for="url">URLを入力:</label></h3>
-        <textarea name="url" placeholder="共有したいURLを入力" wrap="soft" id="url"></textarea>
+			<h3>共有するSNSを選択:</h3>
+			<label for="x" class="sns-option">
+				<input type="checkbox" id="x" value="x" onchange="toggleDetails('x')" />
+				<img
+					src="markdown-share-button/images/x-logo.svg"
+					alt="X"
+					id="x-logo"
+				/>
+				𝕏
+			</label>
 
-        <h3>共有するSNSを選択:</h3>
-        <label for="x" class="sns-option">
-            <input type="checkbox" id="x" value="x" onchange="toggleDetails('x')">
-            <img src="markdown-share-button/images/x-logo.svg" alt="X" id="x-logo">
-            𝕏
-        </label>
+			<!-- X details -->
+			<div id="x-details">
+				<label for="x-text">共有時に表示されるテキスト</label>
+				<input type="text" id="x-text" placeholder="このサイト面白いよ！など" />
+				<label for="x-hashtags">ハッシュタグ</label>
+				<input
+					type="text"
+					id="x-hashtags"
+					placeholder="ハッシュタグ1,ハッシュタグ2"
+				/>
+				<label for="x-account">Xアカウント</label>
+				<div class="account-input">
+					<span>@</span>
+					<input type="text" id="x-account" placeholder="アカウントID" />
+				</div>
+			</div>
 
-        <!-- X details -->
-        <div id="x-details">
-            <label for="x-text">共有時に表示されるテキスト</label>
-            <input type="text" id="x-text" placeholder="このサイト面白いよ！など">
-            <label for="x-hashtags">ハッシュタグ</label>
-            <input type="text" id="x-hashtags" placeholder="ハッシュタグ1,ハッシュタグ2">
-            <label for="x-account">Xアカウント</label>
-            <div class="account-input">
-                <span>@</span>
-                <input type="text" id="x-account" placeholder="アカウントID">
-            </div>
-        </div>
+			<label for="twitter" class="sns-option">
+				<input
+					type="checkbox"
+					id="twitter"
+					value="twitter"
+					onchange="toggleDetails('twitter')"
+				/>
+				<img
+					src="markdown-share-button/images/twitter-logo.svg"
+					alt="Twitter"
+				/>
+				Twitter
+			</label>
 
-        <label for="twitter" class="sns-option">
-            <input type="checkbox" id="twitter" value="twitter" onchange="toggleDetails('twitter')">
-            <img src="markdown-share-button/images/twitter-logo.svg" alt="Twitter">
-            Twitter
-        </label>
+			<!-- Twitter details -->
+			<div id="twitter-details">
+				<label for="twitter-text">共有時に表示されるテキスト</label>
+				<input
+					type="text"
+					id="twitter-text"
+					placeholder="このサイト面白いよ！など"
+				/>
+				<label for="twitter-hashtags">ハッシュタグ</label>
+				<input
+					type="text"
+					id="twitter-hashtags"
+					placeholder="ハッシュタグ1,ハッシュタグ2"
+				/>
+				<label for="twitter-account">Twitterアカウント</label>
+				<div class="account-input">
+					<span>@</span>
+					<input type="text" id="twitter-account" placeholder="アカウントID" />
+				</div>
+			</div>
 
-        <!-- Twitter details -->
-        <div id="twitter-details">
-            <label for="twitter-text">共有時に表示されるテキスト</label>
-            <input type="text" id="twitter-text" placeholder="このサイト面白いよ！など">
-            <label for="twitter-hashtags">ハッシュタグ</label>
-            <input type="text" id="twitter-hashtags" placeholder="ハッシュタグ1,ハッシュタグ2">
-            <label for="twitter-account">Twitterアカウント</label>
-            <div class="account-input">
-                <span>@</span>
-                <input type="text" id="twitter-account" placeholder="アカウントID">
-            </div>
-        </div>
+			<label for="facebook" class="sns-option">
+				<input type="checkbox" id="facebook" value="facebook" />
+				<img
+					src="markdown-share-button/images/facebook-logo.svg"
+					alt="Facebook"
+				/>
+				Facebook
+			</label>
+			<label for="line" class="sns-option">
+				<input
+					type="checkbox"
+					id="line"
+					value="line"
+					onchange="toggleDetails('line')"
+				/>
+				<img src="markdown-share-button/images/line-logo.svg" alt="LINE" />
+				LINE
+			</label>
 
-        <label for="facebook" class="sns-option">
-            <input type="checkbox" id="facebook" value="facebook">
-            <img src="markdown-share-button/images/facebook-logo.svg" alt="Facebook">
-            Facebook
-        </label>
-        <label for="line" class="sns-option">
-            <input type="checkbox" id="line" value="line" onchange="toggleDetails('line')">
-            <img src="markdown-share-button/images/line-logo.svg" alt="LINE">
-            LINE
-        </label>
+			<!-- line details -->
+			<div id="line-details">
+				<label for="line-text">共有時に表示されるテキスト</label>
+				<input
+					type="text"
+					id="line-text"
+					placeholder="このサイト面白いよ！など"
+				/>
+			</div>
 
-        <!-- line details -->
-        <div id="line-details">
-            <label for="line-text">共有時に表示されるテキスト</label>
-            <input type="text" id="line-text" placeholder="このサイト面白いよ！など">
-        </div>
+			<label for="misskey" class="sns-option">
+				<input
+					type="checkbox"
+					id="misskey"
+					value="misskey"
+					onchange="toggleDetails('misskey')"
+				/>
+				<img
+					src="markdown-share-button/images/misskey-logo.svg"
+					alt="Misskey"
+				/>
+				Misskey(misskey.io)
+			</label>
 
-        <label for="misskey" class="sns-option">
-            <input type="checkbox" id="misskey" value="misskey" onchange="toggleDetails('misskey')">
-            <img src="markdown-share-button/images/misskey-logo.svg" alt="Misskey">
-            Misskey(misskey.io)
-        </label>
+			<!-- misskey details -->
+			<div id="misskey-details">
+				<label for="misskey-title">共有時に表示されるタイトル</label>
+				<input
+					type="text"
+					id="misskey-title"
+					placeholder="webサイトのタイトル"
+				/>
+				<label for="misskey-text">共有時に表示されるテキスト</label>
+				<input
+					type="text"
+					id="misskey-text"
+					placeholder="このサイト面白いよ！など"
+				/>
+			</div>
 
-        <!-- misskey details -->
-        <div id="misskey-details">
-            <label for="misskey-title">共有時に表示されるタイトル</label>
-            <input type="text" id="misskey-title" placeholder="webサイトのタイトル">
-            <label for="misskey-text">共有時に表示されるテキスト</label>
-            <input type="text" id="misskey-text" placeholder="このサイト面白いよ！など">
-        </div>
+			<label for="pocket" class="sns-option">
+				<input type="checkbox" id="pocket" value="pocket" />
+				<img src="markdown-share-button/images/pocket-logo.svg" alt="Pocket" />
+				Pocket
+			</label>
 
-        <label for="pocket" class="sns-option">
-            <input type="checkbox" id="pocket" value="pocket">
-            <img src="markdown-share-button/images/pocket-logo.svg" alt="Pocket">
-            Pocket
-        </label>
+			<label for="email" class="sns-option">
+				<input
+					type="checkbox"
+					id="email"
+					value="email"
+					onchange="toggleDetails('email')"
+					autocomplete="email"
+				/>
+				<img src="markdown-share-button/images/email-logo.svg" alt="email" />
+				email
+			</label>
 
-        <label for="email" class="sns-option">
-            <input type="checkbox" id="email" value="email" onchange="toggleDetails('email')" autocomplete="email">
-            <img src="markdown-share-button/images/email-logo.svg" alt="email">
-            email
-        </label>
+			<div id="email-details">
+				<label for="emailAddress">送信先メールアドレス</label>
+				<input
+					type="email"
+					id="emailAddress"
+					placeholder="example@example.com"
+				/>
+				<label for="email-subject">メールの件名</label>
+				<input type="text" id="email-subject" placeholder="メールの件名" />
+				<label for="email-body">メールの本文</label>
+				<input type="text" id="email-body" placeholder="メールの本文" />
+			</div>
 
-        <div id="email-details">
-            <label for="emailAddress">送信先メールアドレス</label>
-            <input type="email" id="emailAddress" placeholder="example@example.com">
-            <label for="email-subject">メールの件名</label>
-            <input type="text" id="email-subject" placeholder="メールの件名">
-            <label for="email-body">メールの本文</label>
-            <input type="text" id="email-body" placeholder="メールの本文">
-        </div>
+			<button onclick="generateOutput()">生成</button>
 
-        <button onclick="generateOutput()">生成</button>
+			<h3>生成された文字列:</h3>
+			<p id="output">
+				URLを入力し、SNSを選択したら、「生成」ボタンを押してください。
+			</p>
+			<button onclick="copyOutput()">コピー</button>
+		</div>
+		<div class="credit">
+			<div>
+				<p>version 1.0.11</p>
+			</div>
+			<div>
+				<p>
+					created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a>
+				</p>
+			</div>
+		</div>
 
-        <h3>生成された文字列:</h3>
-        <p id="output">URLを入力し、SNSを選択したら、「生成」ボタンを押してください。 </p>
-        <button onclick="copyOutput()">コピー</button>
-    </div>
-    <div class="credit">
-        <div>
-            <p>version 1.0.11</p>
-        </div>
-        <div>
-            <p>created by <a href="https://hoshimikan6490.com">Hoshimikan6490</a></p>
-        </div>
-    </div>
+		<script>
+			(window.onload = function () {
+				let uri = new URL(window.location.href);
+				if (
+					uri.hostname.includes('markdown-share-button.pages.dev') ||
+					uri.hostname == 'localhost'
+				) {
+					document.querySelectorAll('img').forEach((img) => {
+						img.src = img.src.replace('markdown-share-button/', '');
+					});
+				}
+				if (
+					uri.hostname === 'hoshimikan6490.com' &&
+					uri.pathname.includes('/markdown-share-button')
+				) {
+					document.querySelectorAll('img').forEach((img) => {
+						img.src = img.src.replace(
+							'/markdown-share-button/markdown-share-button/',
+							'/markdown-share-button/',
+						);
+					});
+				}
+			})();
 
-    <script>
-        (window.onload = function () {
-            let uri = new URL(window.location.href);
-            if (uri.hostname.includes("markdown-share-button.pages.dev") || uri.hostname == "localhost") {
-                document.querySelectorAll("img").forEach(img => {
-                    img.src = img.src.replace("markdown-share-button/", "");
-                });
-            }
-            if (uri.hostname === "hoshimikan6490.com" && uri.pathname.includes("/markdown-share-button")) {
-                document.querySelectorAll("img").forEach(img => {
-                    img.src = img.src.replace("/markdown-share-button/markdown-share-button/", "/markdown-share-button/");
-                });
-            }
-        })();
+			function toggleDetails(type) {
+				let checkbox = document.getElementById(type);
+				document.getElementById(`${type}-details`).style.display =
+					checkbox.checked ? 'block' : 'none';
 
-        function toggleDetails(type) {
-            let checkbox = document.getElementById(type);
-            document.getElementById(`${type}-details`).style.display =
-                checkbox.checked ? 'block' : 'none';
+				// 角の丸みを調整
+				let div = document.querySelector(`label[for=${type}]`);
+				if (checkbox.checked) {
+					div.style.borderBottomLeftRadius = '0';
+					div.style.borderBottomRightRadius = '0';
+				} else {
+					div.style = '';
+				}
+			}
 
-            // 角の丸みを調整
-            let div = document.querySelector(`label[for=${type}]`);
-            if (checkbox.checked) {
-                div.style.borderBottomLeftRadius = "0";
-                div.style.borderBottomRightRadius = "0";
-            } else {
-                div.style = "";
-            }
-        }
+			// ハッシュタグの調整
+			function checkHashtags(input) {
+				// `#` と半角・全角スペースをすべて削除
+				let cleanedInput = input.replace(/[#\s\u3000]/g, '');
 
-        // ハッシュタグの調整
-        function checkHashtags(input) {
-            // `#` と半角・全角スペースをすべて削除
-            let cleanedInput = input.replace(/[#\s\u3000]/g, "");
+				// 文字列をカンマで分割
+				let items = cleanedInput.split(',');
 
-            // 文字列をカンマで分割
-            let items = cleanedInput.split(",");
+				// 空要素を削除してreturn
+				return items.filter(Boolean);
+			}
 
-            // 空要素を削除してreturn
-            return items.filter(Boolean);
-        }
+			// HTMLエスケープ処理（XSS対策）
+			function escapeHTML(str) {
+				return str
+					.replace(/&/g, '&amp;')
+					.replace(/</g, '&lt;')
+					.replace(/>/g, '&gt;')
+					.replace(/"/g, '&quot;')
+					.replace(/'/g, '&#039;');
+			}
 
-        // HTMLエスケープ処理（XSS対策）
-        function escapeHTML(str) {
-            return str.replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
+			function generateOutput() {
+				let url = document.getElementById('url').value;
+				if (!url) {
+					alert('URLを入力してください。');
+					return;
+				}
 
-        function generateOutput() {
-            let url = document.getElementById("url").value;
-            if (!url) {
-                alert("URLを入力してください。");
-                return;
-            }
+				let selectedSNS = [];
+				let xText = encodeURIComponent(document.getElementById('x-text').value);
+				let xHashtags = encodeURIComponent(
+					document.getElementById('x-hashtags').value,
+				);
+				let xAccount = encodeURIComponent(
+					document.getElementById('x-account').value,
+				);
+				let twitterText = encodeURIComponent(
+					document.getElementById('twitter-text').value,
+				);
+				let twitterHashtags = encodeURIComponent(
+					document.getElementById('twitter-hashtags').value,
+				);
+				let twitterAccount = encodeURIComponent(
+					document.getElementById('twitter-account').value,
+				);
+				let lineText = encodeURIComponent(
+					document.getElementById('line-text').value,
+				);
+				let misskeyTitle = encodeURIComponent(
+					document.getElementById('misskey-title').value,
+				);
+				let misskeyText = encodeURIComponent(
+					document.getElementById('misskey-text').value,
+				);
+				let emailSubject = encodeURIComponent(
+					document.getElementById('email-subject').value,
+				);
+				let emailBody = encodeURIComponent(
+					document.getElementById('email-body').value,
+				);
 
-            let selectedSNS = [];
-            let xText = encodeURIComponent(document.getElementById("x-text").value);
-            let xHashtags = encodeURIComponent(document.getElementById("x-hashtags").value);
-            let xAccount = encodeURIComponent(document.getElementById("x-account").value);
-            let twitterText = encodeURIComponent(document.getElementById("twitter-text").value);
-            let twitterHashtags = encodeURIComponent(document.getElementById("twitter-hashtags").value);
-            let twitterAccount = encodeURIComponent(document.getElementById("twitter-account").value);
-            let lineText = encodeURIComponent(document.getElementById("line-text").value);
-            let misskeyTitle = encodeURIComponent(document.getElementById("misskey-title").value);
-            let misskeyText = encodeURIComponent(document.getElementById("misskey-text").value);
-            let emailSubject = encodeURIComponent(document.getElementById("email-subject").value);
-            let emailBody = encodeURIComponent(document.getElementById("email-body").value);
+				// ハッシュタグの入力値を調整
+				xHashtags = checkHashtags(xHashtags);
+				twitterHashtags = checkHashtags(twitterHashtags);
 
-            // ハッシュタグの入力値を調整
-            xHashtags = checkHashtags(xHashtags);
-            twitterHashtags = checkHashtags(twitterHashtags);
+				document
+					.querySelectorAll('input[type=checkbox]:checked')
+					.forEach((checkbox) => {
+						switch (checkbox.value) {
+							case 'x':
+								let xMarkdown = `[![X共有ボタン](https://img.shields.io/twitter/url?url=https://x.com/share&style=social&logo=x&label=𝕏で共有する)](https://x.com/share?${xText ? `text=${xText}` : ''}&url=${url}${xHashtags.length ? `&hashtags=${xHashtags.join(',')}` : ''}${xAccount ? `&via=${xAccount}` : ''})`;
+								selectedSNS.push(xMarkdown);
+								break;
+							case 'twitter':
+								let twitterLogo =
+									'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHZpZXdCb3g9IjAgMCAyNDggMjA0Ij4KICA8cGF0aCBmaWxsPSIjMWQ5YmYwIiBkPSJNMjIxLjk1IDUxLjI5Yy4xNSAyLjE3LjE1IDQuMzQuMTUgNi41MyAwIDY2LjczLTUwLjggMTQzLjY5LTE0My42OSAxNDMuNjl2LS4wNGMtMjcuNDQuMDQtNTQuMzEtNy44Mi03Ny40MS0yMi42NCAzLjk5LjQ4IDggLjcyIDEyLjAyLjczIDIyLjc0LjAyIDQ0LjgzLTcuNjEgNjIuNzItMjEuNjYtMjEuNjEtLjQxLTQwLjU2LTE0LjUtNDcuMTgtMzUuMDcgNy41NyAxLjQ2IDE1LjM3IDEuMTYgMjIuOC0uODctMjMuNTYtNC43Ni00MC41MS0yNS40Ni00MC41MS00OS41di0uNjRjNy4wMiAzLjkxIDE0Ljg4IDYuMDggMjIuOTIgNi4zMkMxMS41OCA2My4zMSA0Ljc0IDMzLjc5IDE4LjE0IDEwLjcxYzI1LjY0IDMxLjU1IDYzLjQ3IDUwLjczIDEwNC4wOCA1Mi43Ni00LjA3LTE3LjU0IDEuNDktMzUuOTIgMTQuNjEtNDguMjUgMjAuMzQtMTkuMTIgNTIuMzMtMTguMTQgNzEuNDUgMi4xOSAxMS4zMS0yLjIzIDIyLjE1LTYuMzggMzIuMDctMTIuMjYtMy43NyAxMS42OS0xMS42NiAyMS42Mi0yMi4yIDI3LjkzIDEwLjAxLTEuMTggMTkuNzktMy44NiAyOS03Ljk1LTYuNzggMTAuMTYtMTUuMzIgMTkuMDEtMjUuMiAyNi4xNnoiLz4KPC9zdmc+';
+								let twitterMarkdown = `[![twitter共有ボタン](https://img.shields.io/twitter/url?url=https://twitter.com/share&style=social&logo=${twitterLogo}&label=Twitterで共有する)](https://twitter.com/share?${twitterText ? `text=${twitterText}` : ''}&url=${url}${twitterHashtags.length ? `&hashtags=${twitterHashtags.join(',')}` : ''}${twitterAccount ? `&via=${twitterAccount}` : ''})`;
+								selectedSNS.push(twitterMarkdown);
+								break;
+							case 'facebook':
+								let facebookMarkdown = `[![Facebook共有ボタン](https://img.shields.io/twitter/url?url=https://www.facebook.com/plugins/share_button.php?&width=102&height=20&style=social&logo=facebook&logoSize=auto&label=Facebookで共有する)](https://www.facebook.com/sharer/sharer.php?u=${url})`;
+								selectedSNS.push(facebookMarkdown);
+								break;
+							case 'line':
+								let lineLogo =
+									'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAABZVBMVEUAAAAAv1AAz1AQz1AAx1AAx1gIx1AIx1gEw1QEx1QDxVQDxlMDyFQGxlMDxlMGxlMFyVYFx1YFxFUFx1UFyFUFxVUFyFUHxlQHyFcHxlQHxlYHyFQGxVQGx1QGx1YGxVQGx1QFxlYFxlMFyFYGx1UFx1UGxlQGx1UFxlQGxlQGxlQGxlUGyFQGyFYFx1QFx1UFx1UGx1UFxlQFxlUGx1UFxlQGx1UGx1UGx1UGx1UFxlUGx1UFxlUGx1UGx1UHx1UHx1YWymAWy18lzmolzmsmzmo00XU10XQ10XVE1X9E1YBU2IpU2Ypj3JVy355y359z35+B46mB46qC46qD46qR5rWR57SR57WS5rSS5rWS57Wh6r6h6r+i6r+j6r+w7cix7cmx7cq/8dTA8dTA8dXB8dTP9N7P9N/P9d7Q9N/Q9d7R9d/e+Ojf+Ojf+Ong+Ong+Ort+/Pu+/Pv+/T+//7+///////t6CW8AAAAPnRSTlMAEBAQICAgIEBAT09PT1BQXl9gYG5vb29vcHBwf39/gICOj4+en5+foKCur6+vvr6/zc7Ozs/P3d7f7u7v/u2viCUAAAL8SURBVEjHnZdpVxMxFIbTFlrqgisibsWKuxawilM0KW0EoYsKRXFp3WhRQKAy0/x+MzOdZpnMTOz7oacnyXPum3uSmzsAKBU/M3F3oYCoCnOPM2NxoK34jTkkaW5iRAsd85F9fmxo1JZxIhQdDUFt3Q4xf/klipBxLihPt5CGbqrZBaSlpwrrowWkKWNkeJbS8plReX5VqdVrlVWFc5H25aryuWOSvvZbtXJI1s6Lc+XNAeipifkF8ErQhhWoD3/BknZPMNwlAWpwq2Y9dpxnN0mwtllw6F2TgiZLyCGWQ6e1WUqXpdDcTaqTKH0TQ48yFncj4d67QWj7pEwxuEmidTwwnhFcY6KjDc53jAX+ZM+Z7V1nzW6b/j1yBo5I21E/Z5xvLtcO1e4bwKjTQNi0IzXc9UtuRqzXHnwKZAZsifhgVOVhU0wZnAKP2LlUwHQrDrzEbXrLA2a4fFVVcOnIjdyg6t+XpgfkubNZ98P1VbQi75nBBkBhtuvdMio5cJ1Kjgw5GCtg8pFOiHvmzhgHI9OFEcZ4zYNJxYHtsVU3srWmhJ3T2S7aWibLxU6jSOHj5aXNQzqCiv09H7A7zV9mZ9Nmy9YP8r1ldlv7dID+umNfXdtfWAkGz7jQ2xpH22L1IAfuIznf4VdynS1/yN9IhN5Hwn+41dfE6lf6FcEecPWXFqKYUO7xQSj7d4Wv/HGhhNn0ji5L8wXAtPRKbVh6LJwEQPLtWO+p9yuwCCal0uvdr5/+6L09LC7K+Yr+IPrWjmXxBqwP0ivrvTfq/qm89pYl7/iNrz0AIDA0VxKp5d9YnoGnvWdyNgjuuJbXfRNwZvA+pxZDIvf2VhQ9TZK1BlcDYHu364pxeJZvSrJKFvesJlaxWaEbiuWVdLWsHJ6X+rCY8R9NXFJuAVPa9POkv/lM5bVQOJ9Q9r1ZqMFmEwEd94VI64uTwa1+6k5ocJhLhn5ljBswGE1Hft+kcxAOiTrmL4k8hDB3PaH/UZdIZx7kDEpB48nMxZMB5D9iyXNg4LrCVgAAAABJRU5ErkJggg==';
+								let lineMarkdown = `[![LINE共有ボタン](https://img.shields.io/twitter/url?url=https://social-plugins.line.me/lineit/share&width=102&height=20&style=social&logo=${lineLogo}&logoSize=auto&label=LINEで共有する)](https://social-plugins.line.me/lineit/share?url=${url}${lineText ? `&text=${lineText}` : ''})`;
+								selectedSNS.push(lineMarkdown);
+								break;
+							case 'misskey':
+								let misskeyMarkdown = `[![misskey共有ボタン](https://img.shields.io/twitter/url?url=https://misskey.io/share&style=social&logo=misskey&logoSize=auto&label=misskeyで共有する)](https://misskey.io/share?url=${url}${misskeyTitle ? `&title=${misskeyTitle}` : ''}${misskeyText ? `&text=${misskeyText}` : ''})`;
+								selectedSNS.push(misskeyMarkdown);
+								break;
+							case 'pocket':
+								let pocketMarkdown = `[![Pocket共有ボタン](https://img.shields.io/twitter/url?url=https://getpocket.com/edit&style=social&logo=pocket&logoSize=auto&label=Pocketで共有する)](https://getpocket.com/edit?url=${url})`;
+								selectedSNS.push(pocketMarkdown);
+								break;
+							case 'email':
+								let emailAddress =
+									document.getElementById('emailAddress').value;
+								if (!emailAddress || !emailSubject || !emailBody) {
+									alert(
+										'メールを選択した場合、送信先アドレスと件名と本文を全て入力してください。',
+									);
+									return;
+								}
 
-            // TODO: SNSによっては、textが必須のものもあるかもなので確認
-            document.querySelectorAll("input[type=checkbox]:checked").forEach(checkbox => {
-                switch (checkbox.value) {
-                    case "x":
-                        let xMarkdown = `[![X共有ボタン](https://img.shields.io/twitter/url?url=https://x.com/share&style=social&logo=x&label=𝕏で共有する)](https://x.com/share?${xText ? `text=${xText}` : ""}&url=${url}${xHashtags.length ? `&hashtags=${xHashtags.join(",")}` : ""}${xAccount ? `&via=${xAccount}` : ""})`;
-                        selectedSNS.push(xMarkdown);
-                        break;
-                    case "twitter":
-                        let twitterLogo = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbDpzcGFjZT0icHJlc2VydmUiIHZpZXdCb3g9IjAgMCAyNDggMjA0Ij4KICA8cGF0aCBmaWxsPSIjMWQ5YmYwIiBkPSJNMjIxLjk1IDUxLjI5Yy4xNSAyLjE3LjE1IDQuMzQuMTUgNi41MyAwIDY2LjczLTUwLjggMTQzLjY5LTE0My42OSAxNDMuNjl2LS4wNGMtMjcuNDQuMDQtNTQuMzEtNy44Mi03Ny40MS0yMi42NCAzLjk5LjQ4IDggLjcyIDEyLjAyLjczIDIyLjc0LjAyIDQ0LjgzLTcuNjEgNjIuNzItMjEuNjYtMjEuNjEtLjQxLTQwLjU2LTE0LjUtNDcuMTgtMzUuMDcgNy41NyAxLjQ2IDE1LjM3IDEuMTYgMjIuOC0uODctMjMuNTYtNC43Ni00MC41MS0yNS40Ni00MC41MS00OS41di0uNjRjNy4wMiAzLjkxIDE0Ljg4IDYuMDggMjIuOTIgNi4zMkMxMS41OCA2My4zMSA0Ljc0IDMzLjc5IDE4LjE0IDEwLjcxYzI1LjY0IDMxLjU1IDYzLjQ3IDUwLjczIDEwNC4wOCA1Mi43Ni00LjA3LTE3LjU0IDEuNDktMzUuOTIgMTQuNjEtNDguMjUgMjAuMzQtMTkuMTIgNTIuMzMtMTguMTQgNzEuNDUgMi4xOSAxMS4zMS0yLjIzIDIyLjE1LTYuMzggMzIuMDctMTIuMjYtMy43NyAxMS42OS0xMS42NiAyMS42Mi0yMi4yIDI3LjkzIDEwLjAxLTEuMTggMTkuNzktMy44NiAyOS03Ljk1LTYuNzggMTAuMTYtMTUuMzIgMTkuMDEtMjUuMiAyNi4xNnoiLz4KPC9zdmc+"
-                        let twitterMarkdown = `[![twitter共有ボタン](https://img.shields.io/twitter/url?url=https://twitter.com/share&style=social&logo=${twitterLogo}&label=Twitterで共有する)](https://twitter.com/share?${twitterText ? `text=${twitterText}` : ""}&url=${url}${twitterHashtags.length ? `&hashtags=${twitterHashtags.join(",")}` : ""}${twitterAccount ? `&via=${twitterAccount}` : ""})`;
-                        selectedSNS.push(twitterMarkdown);
-                        break;
-                    case "facebook":
-                        let facebookMarkdown = `[![Facebook共有ボタン](https://img.shields.io/twitter/url?url=https://www.facebook.com/plugins/share_button.php?&width=102&height=20&style=social&logo=facebook&logoSize=auto&label=Facebookで共有する)](https://www.facebook.com/sharer/sharer.php?u=${url})`;
-                        selectedSNS.push(facebookMarkdown);
-                        break;
-                    case "line":
-                        let lineLogo = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADwAAAA8CAMAAAANIilAAAABZVBMVEUAAAAAv1AAz1AQz1AAx1AAx1gIx1AIx1gEw1QEx1QDxVQDxlMDyFQGxlMDxlMGxlMFyVYFx1YFxFUFx1UFyFUFxVUFyFUHxlQHyFcHxlQHxlYHyFQGxVQGx1QGx1YGxVQGx1QFxlYFxlMFyFYGx1UFx1UGxlQGx1UFxlQGxlQGxlQGxlUGyFQGyFYFx1QFx1UFx1UGx1UFxlQFxlUGx1UFxlQGx1UGx1UGx1UGx1UFxlUGx1UFxlUGx1UGx1UHx1UHx1YWymAWy18lzmolzmsmzmo00XU10XQ10XVE1X9E1YBU2IpU2Ypj3JVy355y359z35+B46mB46qC46qD46qR5rWR57SR57WS5rSS5rWS57Wh6r6h6r+i6r+j6r+w7cix7cmx7cq/8dTA8dTA8dXB8dTP9N7P9N/P9d7Q9N/Q9d7R9d/e+Ojf+Ojf+Ong+Ong+Ort+/Pu+/Pv+/T+//7+///////t6CW8AAAAPnRSTlMAEBAQICAgIEBAT09PT1BQXl9gYG5vb29vcHBwf39/gICOj4+en5+foKCur6+vvr6/zc7Ozs/P3d7f7u7v/u2viCUAAAL8SURBVEjHnZdpVxMxFIbTFlrqgisibsWKuxawilM0KW0EoYsKRXFp3WhRQKAy0/x+MzOdZpnMTOz7oacnyXPum3uSmzsAKBU/M3F3oYCoCnOPM2NxoK34jTkkaW5iRAsd85F9fmxo1JZxIhQdDUFt3Q4xf/klipBxLihPt5CGbqrZBaSlpwrrowWkKWNkeJbS8plReX5VqdVrlVWFc5H25aryuWOSvvZbtXJI1s6Lc+XNAeipifkF8ErQhhWoD3/BknZPMNwlAWpwq2Y9dpxnN0mwtllw6F2TgiZLyCGWQ6e1WUqXpdDcTaqTKH0TQ48yFncj4d67QWj7pEwxuEmidTwwnhFcY6KjDc53jAX+ZM+Z7V1nzW6b/j1yBo5I21E/Z5xvLtcO1e4bwKjTQNi0IzXc9UtuRqzXHnwKZAZsifhgVOVhU0wZnAKP2LlUwHQrDrzEbXrLA2a4fFVVcOnIjdyg6t+XpgfkubNZ98P1VbQi75nBBkBhtuvdMio5cJ1Kjgw5GCtg8pFOiHvmzhgHI9OFEcZ4zYNJxYHtsVU3srWmhJ3T2S7aWibLxU6jSOHj5aXNQzqCiv09H7A7zV9mZ9Nmy9YP8r1ldlv7dID+umNfXdtfWAkGz7jQ2xpH22L1IAfuIznf4VdynS1/yN9IhN5Hwn+41dfE6lf6FcEecPWXFqKYUO7xQSj7d4Wv/HGhhNn0ji5L8wXAtPRKbVh6LJwEQPLtWO+p9yuwCCal0uvdr5/+6L09LC7K+Yr+IPrWjmXxBqwP0ivrvTfq/qm89pYl7/iNrz0AIDA0VxKp5d9YnoGnvWdyNgjuuJbXfRNwZvA+pxZDIvf2VhQ9TZK1BlcDYHu364pxeJZvSrJKFvesJlaxWaEbiuWVdLWsHJ6X+rCY8R9NXFJuAVPa9POkv/lM5bVQOJ9Q9r1ZqMFmEwEd94VI64uTwa1+6k5ocJhLhn5ljBswGE1Hft+kcxAOiTrmL4k8hDB3PaH/UZdIZx7kDEpB48nMxZMB5D9iyXNg4LrCVgAAAABJRU5ErkJggg=="
-                        let lineMarkdown = `[![LINE共有ボタン](https://img.shields.io/twitter/url?url=https://social-plugins.line.me/lineit/share&width=102&height=20&style=social&logo=${lineLogo}&logoSize=auto&label=LINEで共有する)](https://social-plugins.line.me/lineit/share?url=${url}${lineText ? `&text=${lineText}` : ""})`;
-                        selectedSNS.push(lineMarkdown);
-                        break;
-                    case "misskey":
-                        let misskeyMarkdown = `[![misskey共有ボタン](https://img.shields.io/twitter/url?url=https://misskey.io/share&style=social&logo=misskey&logoSize=auto&label=misskeyで共有する)](https://misskey.io/share?url=${url}${misskeyTitle ? `&title=${misskeyTitle}` : ""}${misskeyText ? `&text=${misskeyText}` : ""})`;
-                        selectedSNS.push(misskeyMarkdown);
-                        break;
-                    case "pocket":
-                        let pocketMarkdown = `[![Pocket共有ボタン](https://img.shields.io/twitter/url?url=https://getpocket.com/edit&style=social&logo=pocket&logoSize=auto&label=Pocketで共有する)](https://getpocket.com/edit?url=${url})`;
-                        selectedSNS.push(pocketMarkdown);
-                        break;
-                    case "email":
-                        let emailAddress = document.getElementById("emailAddress").value;
-                        if (!emailAddress || !emailSubject || !emailBody) {
-                            alert("メールを選択した場合、送信先アドレスと件名と本文を全て入力してください。");
-                            return;
-                        }
+								if (
+									!emailAddress.match(
+										/[a-zA-Z0-9.+_-]+@.+\.[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]/,
+									)
+								) {
+									alert(
+										'メールアドレスの形式が正しくありません。\nメールアドレスが正しく入力されているか確認してください。',
+									);
+									return;
+								}
 
-                        if (!emailAddress.match(/[a-zA-Z0-9.+_-]+@.+\.[a-zA-Z0-9][a-zA-Z0-9-]{0,61}[a-zA-Z0-9]/)) {
-                            alert("メールアドレスの形式が正しくありません。\nメールアドレスが正しく入力されているか確認してください。");
-                            return;
-                        }
+								let emailLogo =
+									'data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyBmaWxsPSIjMDAwMDAwIiB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAxOTIwIDE5MjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogICAgPHBhdGggZD0iTTE5MjAgNDI4LjI2NnYxMTg5LjU0bC00NjQuMTYtNTgwLjE0Ni04OC4yMDMgNzAuNTg1IDQ2OC42NzkgNTg1LjkwNEg4My42ODRsNDY4LjY3OS01ODUuOTA0LTg4LjIwMi03MC41ODVMMCAxNjE3LjgwNVY0MjguMjY1bDk1OS45NDQgODMyLjQ0MUwxOTIwIDQyOC4yNjZaTTE5MTkuOTMyIDIyNnY1Mi42MjdsLTk1OS45NDMgODMyLjQ0TC4wNDUgMjc4LjYyOFYyMjZoMTkxOS44ODdaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4NCjwvc3ZnPg==';
+								let emailMarkdown = `[![Email共有ボタン](https://img.shields.io/twitter/url?url=http://mail.google.com&style=social&logo=${emailLogo}&logoColor=black&logoSize=auto&label=Emailで共有する)](mailto:${emailAddress}?body=${emailBody ? `${emailBody}%0D%0A` : ''}${url}&${emailSubject ? `subject=${emailSubject}` : ''})`;
+								selectedSNS.push(emailMarkdown);
+								break;
+						}
+					});
 
-                        let emailLogo = "data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IS0tIFVwbG9hZGVkIHRvOiBTVkcgUmVwbywgd3d3LnN2Z3JlcG8uY29tLCBHZW5lcmF0b3I6IFNWRyBSZXBvIE1peGVyIFRvb2xzIC0tPg0KPHN2ZyBmaWxsPSIjMDAwMDAwIiB3aWR0aD0iODAwcHgiIGhlaWdodD0iODAwcHgiIHZpZXdCb3g9IjAgMCAxOTIwIDE5MjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+DQogICAgPHBhdGggZD0iTTE5MjAgNDI4LjI2NnYxMTg5LjU0bC00NjQuMTYtNTgwLjE0Ni04OC4yMDMgNzAuNTg1IDQ2OC42NzkgNTg1LjkwNEg4My42ODRsNDY4LjY3OS01ODUuOTA0LTg4LjIwMi03MC41ODVMMCAxNjE3LjgwNVY0MjguMjY1bDk1OS45NDQgODMyLjQ0MUwxOTIwIDQyOC4yNjZaTTE5MTkuOTMyIDIyNnY1Mi42MjdsLTk1OS45NDMgODMyLjQ0TC4wNDUgMjc4LjYyOFYyMjZoMTkxOS44ODdaIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiLz4NCjwvc3ZnPg==";
-                        let emailMarkdown = `[![Email共有ボタン](https://img.shields.io/twitter/url?url=http://mail.google.com&style=social&logo=${emailLogo}&logoColor=black&logoSize=auto&label=Emailで共有する)](mailto:${emailAddress}?body=${emailBody ? `${emailBody}%0D%0A` : ""}${url}&${emailSubject ? `subject=${emailSubject}` : ""})`;
-                        selectedSNS.push(emailMarkdown);
-                        break;
-                }
-            });
+				document.getElementById('output').innerHTML =
+					selectedSNS.length > 0
+						? selectedSNS.map((item) => escapeHTML(item)).join('<br>')
+						: 'SNSを選択してください。';
+				document.getElementById('output').style.color = 'black';
+			}
 
-            document.getElementById("output").innerHTML = selectedSNS.length > 0
-                ? selectedSNS.map(item => escapeHTML(item)).join("<br>")
-                : "SNSを選択してください。";
-            document.getElementById("output").style.color = "black";
-        }
+			function copyOutput() {
+				let text = document.getElementById('output').innerText;
 
-        function copyOutput() {
-            let text = document.getElementById('output').innerText;
+				if (
+					text ==
+						'URLを入力し、SNSを選択したら、「生成」ボタンを押してください。' ||
+					text == 'SNSを選択してください。'
+				) {
+					alert(
+						'生成された文字列がありません。\n文字列を生成すると、結果をコピーできるようになります。',
+					);
+					return;
+				}
 
-            if (text == "URLを入力し、SNSを選択したら、「生成」ボタンを押してください。" || text == "SNSを選択してください。") {
-                alert('生成された文字列がありません。\n文字列を生成すると、結果をコピーできるようになります。');
-                return;
-            }
-
-            navigator.clipboard.writeText()
-                .then(() => {
-                    alert('コピーしました。');
-                })
-                .catch(err => {
-                    alert('コピーに失敗しました。');
-                });
-        }
-    </script>
-</body>
-
+				navigator.clipboard
+					.writeText()
+					.then(() => {
+						alert('コピーしました。');
+					})
+					.catch((err) => {
+						alert('コピーに失敗しました。');
+					});
+			}
+		</script>
+	</body>
 </html>
